@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "log4j.dtd">
+<log4j:configuration>
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d - %c -%-4r [%t] %-5p %x - %m%n"/>
+        </layout>
+        <!--限制输出级别-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMax" value="ERROR"/>
+            <param name="LevelMin" value="TRACE"/>
+        </filter>
+    </appender>
+
+    <!-- 模块示例：shareSDK-->
+    <appender name="sharesdk_register_eventlogger" class="mob.graylog.log.GrayLog4jAppender">
+        <!-- 日志模块的topic -->
+        <param name="es_index_" value="share_sdk"/>
+        <param name="es_type_" value="register"/>
+        <param name="AdditionalFields" value="fieldName1=Value1,fieldName2=Value2"/>
+        <!--公共flume地址-->
+        <param name="HostName" value="192.168.56.101"/>
+        <param name="Port" value="7778"/>
+        <param name="UnsafeMode" value="true"/>
+        <param name="originHost" value="192.168.56.1"/>
+        <param name="Version" value="1.0"/>
+        <param name="MdcProfiling" value="true"/>
+        <param name="TimestampPattern" value="yyyy-MM-dd HH:mm:ss,SSSS"/>
+        <param name="MaximumMessageSize" value="8192"/>
+        <!-- 必填 end -->
+        <layout class="org.apache.log4j.PatternLayout">
+        </layout>
+    </appender>
+
+    <appender name="registerAsync" class="org.apache.log4j.AsyncAppender">
+        <param name="Blocking" value="false"/>
+        <param name="BufferSize" value="500"/>
+        <appender-ref ref="sharesdk_register_eventlogger"/>
+    </appender>
+
+
+    <!-- 模块示例：shareSDK-->
+    <appender name="sharesdk_login_eventlogger" class="mob.graylog.log.GrayLog4jAppender">
+        <!-- 项目索引名-->
+        <param name="es_index_" value="share_sdk"/>
+        <!-- 同一项目有不同的type-->
+        <param name="es_type_" value="login"/>
+        <!-- 额外的字段-->
+        <param name="AdditionalFields" value="fieldName3=Value3,fieldName4=Value4"/>
+        <!--公共flume地址-->
+        <param name="HostName" value="192.168.56.101"/>
+        <param name="Port" value="7778"/>
+        <param name="UnsafeMode" value="true"/>
+        <param name="originHost" value="192.168.56.1"/>
+        <param name="Version" value="1.0"/>
+        <param name="MdcProfiling" value="true"/>
+        <param name="TimestampPattern" value="yyyy-MM-dd HH:mm:ss,SSSS"/>
+        <param name="MaximumMessageSize" value="8192"/>
+        <!-- 必填 end -->
+        <layout class="org.apache.log4j.PatternLayout">
+        </layout>
+    </appender>
+
+    <appender name="loginAsync" class="org.apache.log4j.AsyncAppender">
+        <param name="Blocking" value="false"/>
+        <param name="BufferSize" value="500"/>
+        <appender-ref ref="sharesdk_login_eventlogger"/>
+    </appender>
+
+
+
+    <logger name="sharesdk_register" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="registerAsync"/>
+    </logger>
+    <logger name="sharesdk_login" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="loginAsync"/>
+    </logger>
+
+
+    <root>
+        <priority value="ERROR"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="registerAsync"/>
+        <appender-ref ref="loginAsync"/>
+
+    </root>
+</log4j:configuration>

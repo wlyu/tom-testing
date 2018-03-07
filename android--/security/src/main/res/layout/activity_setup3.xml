@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_weight="100"
+                  android:orientation="vertical"
+                  android:background="@color/white">
+        <!-- 上 -->
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:background="@color/purple">
+            <ImageView android:id="@+id/imgv"
+                       android:layout_width="80dp"
+                       android:layout_height="80dp"
+                       android:layout_centerInParent="true"
+                       android:background="@drawable/set_safephone_icon"/>
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_below="@+id/imgv"
+                      android:layout_marginTop="10dp"
+                      android:gravity="center"
+                      android:text="选择联系人"
+                      android:textColor="@android:color/white"
+                      android:textSize="18sp"/>
+        </RelativeLayout>
+        <!-- 中 -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_margin="15dp"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+            <EditText
+                    android:id="@+id/phone_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="5"
+                    android:hint="请输入安全号码"
+                    android:inputType="phone"
+                    android:textColorHint="@color/olivedrab"
+            />
+            <Button
+                    android:id="@+id/btn_bind_sim"
+                    android:layout_width="55dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/add"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!-- 下 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_weight="10">
+
+        <include layout="@layout/setup_radiogroup"/>
+
+    </LinearLayout>
+
+</LinearLayout>

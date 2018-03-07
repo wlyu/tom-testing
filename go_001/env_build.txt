@@ -1,0 +1,10 @@
+step1 安装
+   go1.10.windows-amd64.msi  ------->   D:\soft\Go
+
+step2 环境变量
+   GOPATH ------->D:\workplace001\go-thrid
+   GOROOT ------->D:\soft\Go
+   
+step3 安装GOland
+   
+   ....

@@ -1,0 +1,22 @@
+错误1:
+######################################################################
+使用flask布置web时,current_user.is_authenticated()出现错误:
+        AttributeError: 'bool' object has no attribute '__call__'
+解决方法:
+        flask-login的版本问题，
+        flask-login2.x是current_user.is_authenticated(),
+        flask-login3.x是current_user.is_authenticated。
+        避免这个问题最好的办法就是使用虚拟环境并在requirement中写
+######################################################################
+错误1: user is_active
+######################################################################
+from flask.ext.login import UserMixin
+from yourapp import login_manager
+
+@login_manager.user_loader
+def get_user(ident):
+  return User.query.get(int(ident))
+
+
+class User(db.Model, UserMixin)
+######################################################################

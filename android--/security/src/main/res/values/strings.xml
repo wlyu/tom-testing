@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="version">1.00</string>
+    <string name="main">main...xxxx</string>
+    <string name="hello_world">hello_world</string>
+    <string name="login">login</string>
+    <!--5-->
+    <string name="inputPassword">inputPassword</string>
+    <string name="protectedYes">protectedYes</string>
+    <string name="protectedNo">protectedNo</string>
+    <string name="setPassword">setPassword</string>
+    <string name="setPasswordDescription">setPasswordDescription</string>
+    <string name="againPassword">againPassword</string>
+
+    <string name="_sim_info_bid_info">hello alallalal</string>
+</resources>

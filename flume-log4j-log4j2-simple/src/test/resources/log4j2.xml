@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="300" packages="mob.graylog.log2">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <!-- 模块1 -->
+        <Flume name="registerEventLogger" compress="false">
+            <!-- 增加多个flume地址 -->
+            <Agent host="192.168.56.101" port="7778"/>
+            <Agent host="192.168.56.101" port="7779"/>
+            <GrayLog4j2GelfLayout>
+                <KeyValuePair key="es_index_" value="url_cloud"/>
+                <KeyValuePair key="es_type_" value="domain"/>
+                <KeyValuePair key="originHost" value="192.168.56.1"/>
+                <KeyValuePair key="host" value="192.168.56.1"/>
+                <KeyValuePair key="topic_flume_graylog" value="register"/>
+            </GrayLog4j2GelfLayout>
+        </Flume>
+        <!-- 模块2 -->
+        <Flume name="loginEventLogger" compress="false">
+            <!-- 增加多个flume地址 -->
+            <Agent host="192.168.56.101" port="7778"/>
+            <Agent host="192.168.56.101" port="7779"/>
+            <GrayLog4j2GelfLayout>
+                <KeyValuePair key="es_index_" value="url_cloud"/>
+                <KeyValuePair key="es_type_" value="appkey"/>
+                <KeyValuePair key="originHost" value="192.168.56.1"/>
+                <KeyValuePair key="host" value="192.168.56.1"/>
+                <KeyValuePair key="topic_flume_graylog" value="login"/>
+            </GrayLog4j2GelfLayout>
+        </Flume>
+
+        <Async name="RegisterAsync">
+            <AppenderRef ref="registerEventLogger"/>
+        </Async>
+
+        <Async name="LoginAsync">
+            <AppenderRef ref="loginEventLogger"/>
+        </Async>
+
+
+    </Appenders>
+    <Loggers>
+        <!-- 模块1 -->
+        <Logger name="logger_for_register" level="error" additivity="false">
+            <AppenderRef ref="RegisterAsync"/>
+        </Logger>
+        <!-- 模块2 -->
+        <Logger name="logger_for_login" level="error" additivity="false">
+            <AppenderRef ref="LoginAsync"/>
+        </Logger>
+
+
+        <Root level="ERROR">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

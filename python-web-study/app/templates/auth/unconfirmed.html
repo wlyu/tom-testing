@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Flasky - not--confirm{% endblock %}
+{% block page_content %}
+<div class="page-header">
+    <h1>resend_confirmation</h1>
+    <p>
+        no confirm?
+        <a href="{{ url_for('auth.resend_confirmation') }}">
+            Click here to resend_confirmation
+        </a>
+    </p>
+</div>
+<div class="col-md-4">
+
+</div>
+{% endblock %}

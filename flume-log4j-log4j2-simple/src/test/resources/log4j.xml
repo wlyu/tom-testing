@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "log4j.dtd">
+<log4j:configuration>
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %p %c{1}:%L - %m%n"/>
+        </layout>
+        <!--限制输出级别-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMax" value="ERROR"/>
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+
+    <appender name="file" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/data/logs/mob-errcollector-config/main.log"/>
+        <param name="MaxFileSize" value="102400KB"/>
+        <!-- Keep one backup file -->
+        <param name="MaxBackupIndex" value="50"/>
+        <param name="Append" value="true" />
+        <param name="encoding" value="UTF-8" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %p %c{1}:%L - %m%n"/>
+        </layout>
+    </appender>
+
+
+    <appender name="errout" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/data/logs/mob-errcollector-config/error.log"/>
+        <param name="MaxFileSize" value="10MB"/>
+        <!-- Keep one backup file -->
+        <param name="MaxBackupIndex" value="100"/>
+        <param name="Append" value="true" />
+        <param name="encoding" value="UTF-8" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}]:%m%n"/>
+        </layout>
+    </appender>
+
+    <!-- 单台机器-->
+<!--
+    <appender name="all_log" class="mob.graylog.log.GrayLog4jAppender">
+-->
+    <!-- 多flume机器 start-->
+    <appender name="all_log"  class="mob.graylog.log.GrayLog4jBalanceAppender">
+
+        <param name="hosts" value="192.168.56.101:7778,192.168.56.101:7779" />
+        <param name="Selector" value="RANDOM" />
+        <param name="maxBackoff" value="30000" />
+        <param name="maxAttempts" value="5" />
+
+
+    <!-- 多flume机器end -->
+
+
+        <!-- 项目索引名-->
+        <param name="es_index_" value="logstash_errcollector"/>
+        <!-- 同一项目有不同的type-->
+        <param name="es_type_" value="common"/>
+        <!-- 额外的字段-->
+        <param name="AdditionalFields" value="fieldName3=Value3,fieldName4=Value4"/>
+        <!--公共flume地址-->
+        <param name="HostName" value="10.18.98.236"/>
+        <param name="Port" value="7778"/>
+        <param name="UnsafeMode" value="true"/>
+        <!-- originHost应该自动获取，需要修正-->
+        <param name="originHost" value="192.168.56.1"/>
+        <param name="Version" value="1.0"/>
+        <param name="MdcProfiling" value="true"/>
+        <param name="TimestampPattern" value="yyyy-MM-dd HH:mm:ss,SSSS"/>
+        <param name="MaximumMessageSize" value="8192"/>
+        <!-- 必填 end -->
+        <layout class="org.apache.log4j.PatternLayout">
+        </layout>
+    </appender>
+
+    <appender name="all_log_async" class="org.apache.log4j.AsyncAppender">
+        <param name="Blocking" value="false"/>
+        <param name="BufferSize" value="500"/>
+        <appender-ref ref="all_log"/>
+    </appender>
+
+    <logger name="com.mob.errcollector.common.utils.ErrorOutput" additivity="true">
+        <level value="info"/>
+        <appender-ref ref="errout" />
+    </logger>
+
+    <root>
+        <priority value="info"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="errout" />
+        <appender-ref ref="all_log_async"/>
+    </root>
+</log4j:configuration>
