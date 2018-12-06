@@ -1,0 +1,213 @@
+.ccgtm-icon.ccgtm-icon-widget::before {
+  content: '';
+}
+
+.ccgtm-popin {
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 0;
+  font-family: Georgia, sans-serif;
+  color: #5e5e60;
+  margin-left: -30%;
+  -webkit-font-smoothing: auto;
+}
+
+.ccgtm-popin p {
+    margin: 1em 0;
+    font-family: Georgia, sans-serif;
+}
+
+#ccgtm-details a {
+  color: #533f34;
+  text-decoration: underline;
+}
+
+.ccgtm-popin-close {
+  display: none;
+}
+
+.ccgtm-popin-title {
+  color: #5e5e60;
+  margin-bottom: 25px;
+  font-size: 18px;
+  font-family: 'LouisVuitton-N-Light', sans-serif;
+  padding: 10px 0;
+  border-color: #a5a5aa;
+}
+
+.ccgtm-pushpop__choices {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap-reverse;
+  justify-content: center;
+  margin: auto 1em;
+}
+
+.ccgtm-button {
+  background-color: transparent;
+  border: none;
+  font-family: 'LouisVuitton-N-Light', sans-serif;
+  font-size: 13px;
+  line-height: 35px;
+  padding: 0 30px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  width: auto;
+}
+
+.ccgtm-button,
+.ccgtm-button--default:hover {
+  transition: all .2s ease-in-out;
+  transition-property: color, background-color;
+}
+
+.ccgtm-button--default:hover {
+  background: transparent;
+}
+
+.ccgtm-button__cancel>.ccgtm-wrapper {
+  position: relative;
+}
+
+.ccgtm-button__cancel>span::before {
+  content: '';
+  background-image: url('./back.svg');
+  background-size: 100% 100%;
+  width: 18px;
+  height: 17px;
+  position: absolute;
+  top: 50%;
+  left: -18px;
+  transform: translateY(-50%);
+}
+
+.ccgtm-choice__yes,
+.ccgtm-choice__more,
+.ccgtm-button__cancel,
+.buttonAction {
+  background-color: #533f34;
+  color: #fff;
+}
+
+.ccgtm-button__cancel {
+  margin-right:10px;
+}
+
+.ccgtm-choice__yes:hover,
+.ccgtm-choice__more:hover,
+.ccgtm-button__cancel:hover,
+.buttonAction:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.ccgtm-fieldCookie {
+  margin-bottom: 1em;
+}
+
+.ccgtm-fieldCookie label {
+  font-weight: 700;
+  font-size: 14px;
+  color: black;
+  margin-bottom: 1em;
+}
+
+.ccgtm-popin-foot {
+  border-top: none;
+  margin: 0;
+  padding: 1em 0;
+}
+
+.ccgtm-pushpop__bottom {
+  padding-top: 1em;
+}
+
+input#ccgtm-field-necessary {
+  display: none;
+}
+
+.ccgtm-popin-head {
+  padding: 0;
+}
+
+.ccgtm-submit {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0;
+  margin: 1em auto;
+}
+
+label strong {
+  font-family: 'LouisVuitton-N-Demi', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.ccgtm-popin--mobile .ccgtm-popin {
+max-width: none;
+width: 60%;
+}
+
+.ccgtm-mask {
+opacity: 0.7;
+}
+
+@media screen and (max-width: 768px) {
+  .ccgtm-popin--mobile .ccgtm-popin {
+    width: 90%;
+  }
+
+  .ccgtm-popin {
+      margin-left: -45%;
+      padding-top: 0;
+  }
+  .ccgtm-popin-inner {
+      padding: 0;
+  }
+  .ccgtm-pushpop {
+      padding: 0;
+  }
+  .ccgtm-pushpop__bottom::after {
+      content: '';
+      display: block;
+      border-top: 1px solid #a5a5aa;
+      height: 40px;
+      padding-top: 10px;
+      text-align: center;
+      margin-top: 1em;
+      background-image: url('./logo-lv.svg');
+      background-size: 100% 100%;
+      background-origin: content-box;
+  }
+  .ccgtm-pushpop__bottom {
+      margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .ccgtm-popin {
+      font-size: 14px;
+  }
+  .ccgtm-popin-title {
+      font-size: 16px;
+      padding: 10px 0;
+  }
+  .ccgtm-pushpop__choices,
+  .ccgtm-submit {
+      flex-direction: column-reverse;
+      margin: 0;
+  }
+  .ccgtm-pushpop__choice>span,
+  .ccgtm-submit>button, .ccgtm-pushpop__choices button {
+      width: 100%;
+      text-align: center;
+      padding: 0;
+  }
+  .ccgtm-pushpop__choice {
+      width: 100%;
+      margin: 0;
+  }
+}
