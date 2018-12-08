@@ -1,0 +1,49 @@
+<!doctype html>
+<title>Hello from Flask</title>
+<head>
+    <link rel="stylesheet" type="text/css" href="static/css/style_CN.css" media="">
+    <link rel="stylesheet" type="text/css" href="static/css/formPattern4_CN.css" media="">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="static/css/categoryHome.css">
+</head>
+<body>
+<div class="page categoryUsual">
+    <main class="content" id="content" role="main" data-scrollable="true">
+        <div id="products-grid" class="products-grid infinite-scroll" data-backtotop="active" ref="">
+            <div class="pl-page">
+                {% for value in values%}
+
+                <div class="productItemContainer">
+                    <a id="sku_M52514" href="/detail?id={{value[0]}}"
+                       class="product-item productItem tagClick tagClick" data-index="0" data-sku="M52514" data-rank="1"
+                       data-detail="1" data-productid="nvprod1170056v" data-productcategory="全系列手袋"
+                       data-evt-product-sku="M52514" data-evt-position-number="rank_1"
+                       data-evt-page-rank="result_list_1" data-evt-action-id="product_selection" style="height: 300px;">
+                        <div class="imageWrapper">
+                            <img data-src=""
+                                 class="postLoaderResponsive notPush product-img"
+                                 data-factorwidth="1.5" alt=""
+                                 style="display: block; opacity: 1; width: 100%; max-height: 300px;"
+                                 src="{{value[2]}}?wid=104&amp;hei=204"  data-loaded-src-attr="data-src" data-currentcategory="PM2">
+                        </div>
+                        <div class="description">
+                            <div class="productName toMinimize">
+                               {{ value[1]}}
+                            </div>
+                            <div class="from-price">
+                                <span class="productPrice">{{value[3]}}</span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="availableMarketingColors">
+                    </div>
+                </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </main>
+</div>
+
+</body>
