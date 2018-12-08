@@ -166,6 +166,13 @@ if __name__ == '__main__':
         #  "smallType": "手包与腰包"
         #  }
     ]
+
+    tmpData = [
+        {"url": getWomenPiJu(),
+         "sex": "女",
+         "bigType": "皮具",
+         "smallType": "all"
+         }]
     for d in tmpData:
         singleMainUrl(d['url'],d['sex'],d['bigType'],d['smallType'])
         print "\n"

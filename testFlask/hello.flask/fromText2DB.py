@@ -5,8 +5,11 @@ import sqlite3
 import os
 import traceback
 
+import re
 import requests
 import thread
+
+from bs4 import BeautifulSoup
 
 
 def go():
@@ -25,16 +28,27 @@ sql = 'INSERT INTO "main"."product" ("sku", "name", "color", "price", "descript"
       '"detailImageList", "html", "sex", "bigType", "smallType") ' \
       'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
+# "sex":"男",
+#  "bigType":"包袋",
+#  "smallType":"手袋"
+k = 0
 
-        # "sex":"男",
-        #  "bigType":"包袋",
-        #  "smallType":"手袋"
+
 def do2(list):
     conn = sqlite3.connect('test123.db')
+    conn.text_factory = str
     cursor = conn.cursor()
     for obj in list:
         try:
-            #print obj['html']
+            cursor.execute('select * from product where sku=?', (obj['sku'],))
+
+            values = cursor.fetchall()
+            if values:
+                global k
+                print  str(k)
+                k = k + 1
+                continue
+            # print obj['html']
             cursor.execute(sql, (obj['sku'],
                                  obj['name'],
                                  obj['color'],
@@ -45,12 +59,12 @@ def do2(list):
                                  obj['html'],
                                  obj['sex'].decode('utf8'),
                                  obj['bigType'].decode('utf8'),
-                                 obj['smallType'].decode('utf8'),))
+                                 obj['smallType'],))
         except Exception, err:
             traceback.print_exc()
             print obj
 
-    cursor.rowcount
+            # cursor.rowcount
     cursor.close()
     conn.commit()
     conn.close()
@@ -73,19 +87,21 @@ def save2DB(fileNamePath):
             print str(i) + "空行"
         else:
             list.append(eval(line))
-
+    if len(list) > 0:
+        do2(list)
     f.close()
 
 
-def select():
+def select(sku):
     conn = sqlite3.connect('test123.db')
     cursor = conn.cursor()
-    cursor.execute('select * from product where sku=?', ('M44155',))
+    cursor.execute('select * from product where sku=?', (sku,))
     values = cursor.fetchall()
-    print  values
+    cursor.rowcount
     cursor.close()
     conn.commit()
     conn.close()
+    return values
 
 
 root = "D:\\tom-testing\\testFlask\\myflask\\static\\image\\";
@@ -122,23 +138,25 @@ def fromDb2LocalImage():
         for singleImage in line[6].split(','):
             saveImage(singleImage, singleImage[singleImage.find('--') + 2:singleImage.find(u'.jpg?') + 4])
     print '\n'
-    
+
 
 if __name__ == '__main__':
     # go()
     # os._exit(1)
-    #save2DB
-    # filePath="d:\\tmp\\";
-    # pathDir = os.listdir(filePath)
-    # for allDir in pathDir:
-    #     child = os.path.join('%s%s' % (filePath, allDir))
-    #     print child.decode('gbk')
-    #     try:
-    #         thread.start_new_thread(save2DB, (child, ))
-    #     except:
-    #         print "Error: unable to start thread"
-    #
-    # while 1:
-    #     pass
-    ##---------------------------------------
-    fromDb2LocalImage()
+    # save2DB
+    filePath = "d:\\tmp\\";
+    pathDir = os.listdir(filePath)
+    for allDir in pathDir:
+        child = os.path.join('%s%s' % (filePath, allDir))
+        print child.decode('gbk')
+        try:
+            thread.start_new_thread(save2DB, (child,))
+
+        except Exception, err:
+            traceback.print_exc()
+            print "Error: unable to start thread"
+
+    ##------写入数据库之后保存本地图片---------------------------------
+    # fromDb2LocalImage()
+    while 1:
+        pass

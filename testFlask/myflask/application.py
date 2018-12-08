@@ -49,6 +49,7 @@ def product():
     cursor.close()
     conn.commit()
     conn.close()
+    print values
     html = values[0][7];
     html= (re.sub(r'\bhttps\S*?\-\-\b', 'http://127.0.0.1:5000/static/image/', html, re.S))
 

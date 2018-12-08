@@ -4,6 +4,7 @@ import thread
 from fromText2DB import save2DB
 from fromText2DB import saveImage
 
+
 def fromDb2LocalImage():
     conn = sqlite3.connect('test123.db')
     cursor = conn.cursor()
@@ -18,9 +19,7 @@ def fromDb2LocalImage():
             saveImage(singleImage, singleImage[singleImage.find('--') + 2:singleImage.find(u'.jpg?') + 4])
     print '\n'
 
+
 if __name__ == '__main__':
-    # filePath = "d:\\tmp\\男_皮具_all.txt".decode("utf-8");
-    for i in range(0,10):
-        thread.start_new_thread(fromDb2LocalImage(),);
-    while 1:
-        pass
+    filePath = "d:\\tmp\\女_皮具_all.txt".decode("utf-8");
+    save2DB(fileNamePath=filePath)
