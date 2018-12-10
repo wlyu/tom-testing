@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# copy from mainList.py
 import re
 import traceback
 import requests;

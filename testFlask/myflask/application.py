@@ -1,11 +1,10 @@
 import sqlite3
 
 import re
-from bs4 import BeautifulSoup
 from flask import render_template, app, Flask, send_file, request
 
 app = Flask(__name__)
-
+dbpath='../hello.flask/test123.db'
 
 # app = Flask(__name__, static_folder='../static')
 
@@ -18,7 +17,7 @@ def hello(name=None):
 
 @app.route('/')
 def index():
-    conn = sqlite3.connect('../hello.flask/test123.db')
+    conn = sqlite3.connect(dbpath)
     cursor = conn.cursor()
     cursor.execute('select sku,name,detailImageList,price from product')
     values = cursor.fetchall()
@@ -42,7 +41,7 @@ def from1_1_to_2():
 @app.route('/product')
 def product():
     id = request.args.get("id")
-    conn = sqlite3.connect('../hello.flask/test123.db')
+    conn = sqlite3.connect(dbpath)
     cursor = conn.cursor()
     cursor.execute('select * from product where sku=?', (id,))
     values = cursor.fetchall()
